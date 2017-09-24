@@ -1,0 +1,25 @@
+{
+  "name": "canvas",
+  "version": "1.0.0",
+  "description": "Simple web app to calculate a parallelogram and circle by the user click event",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hernanif1/canvas.git"
+  },
+  "author": "Hernani Fernandes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hernanif1/canvas/issues"
+  },
+  "homepage": "https://github.com/hernanif1/canvas#readme",
+  "dependencies": {
+    "normalize.css": "^7.0.0"
+  }
+}
