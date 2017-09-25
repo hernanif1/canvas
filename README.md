@@ -7,6 +7,8 @@ The goal of this task is to write a simple HTML/JavaScript program that interact
 user and draws geometrical shapes to the screen. The program should be launched by
 viewing “index.html” in a modern, standards-compliant, web browser.
 
+## Example
+https://hernanif1.github.io/canvas/
 
 ## Requirements
 - [Node](https://nodejs.org) `6.x` or newer (dev mode)
