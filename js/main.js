@@ -23,7 +23,7 @@
     }
   }
 
-  // YellowCircle
+  // YellowCircle class
   const calculateYellowCircleByArea = (_area, {x, y}) => {
     return {
       x,
@@ -36,7 +36,7 @@
     }
   }
 
-  // YellowCircle
+  // Paralelogram class
   const Paralelogram = () => {
     let paralelogram = {}
 
@@ -45,17 +45,24 @@
       let my = (_y1 + _y2) / 2
       paralelogram.center = { x: mx, y: my }
     }
+
     const setNewPoint = (_centerX, _centerY, _x, _y) => { // Find the position of the 4º element by the median
       let x = (2 * _centerX) - _x
       let y = (2 * _centerY) - _y
       paralelogram.points = [ ...paralelogram.points, { x, y } ]
     }
-    const setArea = (_firstY, _secondY, _secondX, _thirdX) => { // Set the area of paralelogram
-      let base = _secondX - _thirdX
-      base = (base < 0) ? base * -1 : base
-      let height = _secondY - _firstY
-      height = (height < 0) ? height * -1 : height
+
+    const setArea = (x1, y1, x2, y2, x3, y3) => { // Set the area of paralelogram
+      let x = [x1, x2, x3]
+      let y = [y1, y2, y3]
+      let xMax = Math.max(...x)
+      let xMin = Math.min(...x)
+      let yMax = Math.max(...y)
+      let yMin = Math.min(...y)
+      let base = xMax - xMin
+      let height = yMax - yMin
       paralelogram.area = base * height
+
     }
 
     return {
@@ -63,11 +70,12 @@
       center: () => paralelogram.center,
       area: () => paralelogram.area,
       get: () => paralelogram,
+      reset: () => { paralelogram = {} },
       create: (_points) => { // {[{x: Number, y: Number}]} Array of triangle positions
         paralelogram.points = _points
         setCenter(_points[0].x, _points[0].y, _points[2].x, _points[2].y) // [0].x and [0].y are the first point and [2].x and [2].y the last
         setNewPoint(paralelogram.center.x, paralelogram.center.y, _points[1].x, _points[1].y) // x and y are the middle points
-        setArea(_points[0].y, _points[1].y, _points[1].x, _points[2].x)
+        setArea(_points[0].x, _points[0].y, _points[1].x, _points[1].y, _points[2].x, _points[2].y)
         return paralelogram
       }
     }
@@ -75,17 +83,16 @@
 
   /**
    * Draw functions
-  */
+   */
   function drawCanvas (_canvas, _context, _circles, _paralelogram, _yellowCircle, _resetCanvasContext) {
-    // Clear canvas
     _resetCanvasContext(_context, _canvas)
 
-    // Circles
+    // Draw Circles
     for (var i = 0; i < _circles.length; i++) {
       drawCircle(_context, _circles[i])
     }
 
-    // Paralelogram and Yellow Circle
+    // Draw Paralelogram and Yellow Circle
     if (_paralelogram) drawParalelogram(_context, _paralelogram)
     if (_yellowCircle) drawYellowCircle(_context, _yellowCircle)
   }
@@ -191,6 +198,7 @@
       resetCanvasContext(context, canvas)
       resetTextInfos(selectedPointsTextField, objectsAreaTextField)
       circlesObj.reset()
+      paralelogramObj.reset()
     })
   }
   init()
