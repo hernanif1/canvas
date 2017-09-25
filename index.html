@@ -3,24 +3,32 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title></title>
+        <title>Canvas experience</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="apple-touch-icon" href="icon.png">
 
-        <link rel="stylesheet" href="./node_modules/normalize.css">
+        <link rel="stylesheet" href="node_modules/normalize.css">
         <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
         <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
+        <main>
+            <h1>Canvas experience</h1>
+            <a data-js="reset" class="reset">Reset</a>
+            <canvas id="canvas" width="900" height="500"></canvas>
+            <div class="info">
+                <div data-js="selected-points" class="points"></div>
 
-        <!-- Add your site or application content here -->
-        <p>Hello world! This is HTML5 Boilerplate.</p>
+                <div class="objects-area">
+                    <span data-js="objects-area"></span>
+                </div>
+
+            </div>
+        </main>
         <script src="js/main.js"></script>
-
-       
     </body>
 </html>
