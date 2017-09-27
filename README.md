@@ -33,17 +33,11 @@ https://hernanif1.github.io/canvas/
     $ npm install
     ```
 
-3. Install live-server to watch files in dev mode
+3. Run webpack to watch your files and build in dev mode 
 
     ```shell
-    $ npm install -g live-server
+    $ webpack --watch
     ```
-
-4. Run the app
-    ```shell
-    $ live-server
-    ```
-
 
 
 ## License
