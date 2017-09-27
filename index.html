@@ -18,29 +18,33 @@
         <![endif]-->
         <main>
             <h1>Canvas experience</h1>
-            <a data-js="reset" class="reset">Reset</a>
-            <a data-js="openModal" class="about">Learn how to use</a>
+            <a data-js="reset" class="button-reset">Reset</a>
+            <a data-js="openModal" class="button-about">Learn how to use</a>
 
             <div data-js="modal" class="modal">
                 <!-- Modal content -->
                 <div class="modal-content">
                     <span data-js="closeModal" class="modal-close">&times;</span>
                     <h2>TUTORIAL</h2>
+                    <p class="about">
+                        Hi! I'm Hernani Fernandes, a Full Stack developer and this program
+                        is an example how to use canvas features and show an interactive html5.
+                    </p>
                     <ul>
                         <li>
-                            <img src="img/step-1.png" alt="click in any area to creat red circles" />
+                            <img src="img/step-1.png" width="237" height="137" alt="click in any area to creat red circles" />
                             <p>Click 3 times in the white board in diferente places and and create red circles</p>
                         </li>
                         <li>
-                            <img src="img/step-2.png" alt="click in any area to creat red circles" />
+                            <img src="img/step-2.png" width="237" height="137" alt="click in any area to creat red circles" />
                             <p>In the third click will be created a random blue paralelogram and a yellow circle with same area and position of the paralelogram</p>
                         </li>
                         <li>
-                            <img src="img/step-3.png" alt="click in any area to creat red circles" />
+                            <img src="img/step-3.png" width="237" height="137" alt="click in any area to creat red circles" />
                             <p>Drag’n drop the red circles to recalculate the objects or click to set a new red circle position</p>
                         </li>
                         <li>
-                            <img src="img/step-4.png" alt="click in any area to creat red circles" />
+                            <img src="img/step-4.png" width="237" height="137" alt="click in any area to creat red circles" />
                             <p>Click in the right corner in the reset butto to start again!</p>
                         </li>
                     </ul>
@@ -56,6 +60,6 @@
             </div>
         </main>
         <script src="js/modal.js"></script>
-        <script src="js/main.js"></script>
+        <script src="dist/bundle.js"></script>
     </body>
 </html>

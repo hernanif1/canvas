@@ -113,7 +113,7 @@ canvas {
 }
 
 
-.reset, .about {
+.button-reset, .button-about {
     min-width: 90px;
     padding: 10px 25px;
     background-color: pink;
@@ -124,17 +124,18 @@ canvas {
     cursor: pointer;
 }
 
-.about {
+.button-about {
     margin-right: 20px;
 }
 
-.about:hover, .reset:hover {
+.button-about:hover, .button-reset:hover {
     background-color: #FFACBB;
 }
 
-.about:active, .reset:active {
+.button-about:active, .button-reset:active {
     background-color: #DB8F9D;
     color: white;
+
 }
 
 .info div {
@@ -176,7 +177,7 @@ canvas {
     margin: 5% auto; /* 15% from the top and centered */
     padding: 20px;
     width: 700px; /* Could be more or less, depending on screen size */
-    height: 650px;
+    height: 720px;
     border-radius: 4px;
     -webkit-animation-name: slideIn;
     -webkit-animation-duration: 0.4s;
@@ -189,6 +190,11 @@ canvas {
     color: white;
     font-size: 30px;
     line-height: 0;
+    text-align: center;
+}
+
+.modal-content p {
+    color: black;
     text-align: center;
 }
 
@@ -205,7 +211,7 @@ canvas {
 
 .modal-content ul li p {
     margin-top: 30px;
-    color: black;
+    color: #5f5f5f;
 }
 
 /* The Close Button */
