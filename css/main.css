@@ -97,10 +97,8 @@ textarea {
    ========================================================================== */
 
 main {
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: auto;
-    margin-right: auto;
+    padding: 20px 0;
+    margin: 0 auto;
     display: block;
     width: 900px;
 }
@@ -110,25 +108,31 @@ h1{
 }
 
 canvas {
-    border-radius: 3px;
+    border-radius: 4px;
     box-shadow: 0 14px 28px 0 rgba(255, 255, 255, 0.30), 0 36px 40px 0 rgba(255, 255, 255, 0.30);
 }
-.reset {
-    width: 90px;
-    padding: 10px;
+
+
+.reset, .about {
+    min-width: 90px;
+    padding: 10px 25px;
     background-color: pink;
     text-align: center;
     float: right;
     margin-top: 20px;
-    border-radius: 3px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
-.reset:hover {
+.about {
+    margin-right: 20px;
+}
+
+.about:hover, .reset:hover {
     background-color: #FFACBB;
 }
 
-.reset:active {
+.about:active, .reset:active {
     background-color: #DB8F9D;
     color: white;
 }
@@ -147,15 +151,90 @@ canvas {
 }
 
 
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    -webkit-animation-name: fadeIn; /* Fade in the background */
+    -webkit-animation-duration: 0.4s;
+    animation-name: fadeIn;
+    animation-duration: 0.4s;
+    cursor: pointer;
+}
 
+/* Modal Content/Box */
+.modal-content {
+    background-color: #c0c0c0;
+    margin: 5% auto; /* 15% from the top and centered */
+    padding: 20px;
+    width: 700px; /* Could be more or less, depending on screen size */
+    height: 650px;
+    border-radius: 4px;
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideIn;
+    animation-duration: 0.4s;
+    cursor: default;
+}
 
+.modal .modal-content h2 {
+    color: white;
+    font-size: 30px;
+    line-height: 0;
+    text-align: center;
+}
 
+.modal-content ul li {
+    float: left;
+    list-style-type: none;
+    max-width: 270px;
+    margin: 30px 100px 0 0;
+}
 
+.modal-content ul li:nth-child(2n) {
+    margin-right: 0px;
+}
 
+.modal-content ul li p {
+    margin-top: 30px;
+    color: black;
+}
 
+/* The Close Button */
+.modal-close {
+    color: #ac9292;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: -10px;
+    cursor: pointer;
+}
 
+.modal-close:hover,
+.modal-close:focus {
+    color: #776363;
+    text-decoration: none;
+    cursor: pointer;
+}
 
+/* Animation Modal */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0}
+    to {opacity: 1}
+}
 
+@keyframes fadeIn {
+    from {opacity: 0}
+    to {opacity: 1}
+}
 
 
 /* ==========================================================================
