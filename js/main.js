@@ -10,7 +10,8 @@
           radius: 11 / 2,
           color: 'red',
           startAngle: 0,
-          endAngle: Math.PI * 2
+          endAngle: Math.PI * 2,
+          isDragging: false
         }
         circles.push(circle)
       },
@@ -62,7 +63,6 @@
       let base = xMax - xMin
       let height = yMax - yMin
       paralelogram.area = base * height
-
     }
 
     return {
@@ -131,19 +131,22 @@
     let rect = _canvas.getBoundingClientRect()
     let x = _x - rect.left // get x position clicked relative to canvas
     let y = _y - rect.top // get y position clicked relative to canvas
-    let paralelogramPositions = null
-    let yellowCicle = null
-
     if (_circles.length() === 3) _circles.removeCircle()
     _circles.addCircle(x, y)
 
+    let {paralelogramPositions, yellowCicle} = calculateParalelogramAndYellowCircle(_circles, _paralelogram)
+    drawCanvas(_canvas, _context, _circles.get(), paralelogramPositions || undefined, yellowCicle, _resetCanvasContext)
+  }
+
+  function calculateParalelogramAndYellowCircle (_circles, _paralelogram) {
     if (_circles.length() >= 3) {
       let positions = _circles.get()
       let trianglePositions = positions.map(o => ({x: o.x, y: o.y}))
-      paralelogramPositions = _paralelogram.create(trianglePositions)
-      yellowCicle = calculateYellowCircleByArea(_paralelogram.area(), _paralelogram.center())
+      let paralelogramPositions = _paralelogram.create(trianglePositions)
+      let yellowCicle = calculateYellowCircleByArea(_paralelogram.area(), _paralelogram.center())
+      return { paralelogramPositions, yellowCicle }
     }
-    drawCanvas(_canvas, _context, _circles.get(), paralelogramPositions, yellowCicle, _resetCanvasContext)
+    return { paralelogramPositions: undefined, yellowCicle: undefined }
   }
 
   function writeInfos (_circles, paralelogramAndYellowCircleArea, _selectedPointsTextField, _objectsAreaTextField) {
@@ -176,21 +179,115 @@
     let selectedPointsTextField = document.querySelector('div[data-js="selected-points"]')
     let objectsAreaTextField = document.querySelector('span[data-js="objects-area"]')
 
+    // drag related variables
+    var dragok = false
+    var startX
+    var startY
+    var BB = canvas.getBoundingClientRect()
+    var offsetX = BB.left
+    var offsetY = BB.top
+    var WIDTH = canvas.width
+    var HEIGHT = canvas.height
+
+    // handle mousedown events
+    function myDown (e) {
+      // tell the browser we're handling this mouse event
+      e.preventDefault()
+      e.stopPropagation()
+
+      // get the current mouse position
+      var mx = parseInt(e.clientX - offsetX)
+      var my = parseInt(e.clientY - offsetY)
+
+      // test each rect to see if mouse is inside
+      dragok = false
+      for (var i = 0; i < circlesObj.length(); i++) {
+        var r = circlesObj.get()[i]
+        let isMouseOverXCirclePosition = mx >= r.x - (r.radius * 2) && mx < r.x + (r.radius * 2)
+        let isMouseOverYCirclePosition = my >= r.y - (r.radius * 2) && my > r.y - (r.radius * 2)
+        if (isMouseOverXCirclePosition && isMouseOverYCirclePosition) {
+          // if yes, set that rects isDragging=true
+          dragok = true
+          r.isDragging = true
+        }
+      }
+
+
+      // save the current mouse position
+      startX = mx
+      startY = my
+    }
+
+    // handle mouseup events
+    function myUp (e) {
+      // tell the browser we're handling this mouse event
+      e.preventDefault()
+      e.stopPropagation()
+
+      if (dragok === false) {
+        userClickedOnCanvas(
+          e.clientX,
+          e.clientY,
+          canvas,
+          context,
+          circlesObj,
+          paralelogramObj,
+          resetCanvasContext,
+          selectedPointsTextField,
+          objectsAreaTextField
+        )
+        writeInfos(circlesObj.get(), paralelogramObj.area(), selectedPointsTextField, objectsAreaTextField)
+      }
+      // clear all the dragging flags
+      dragok = false
+      for (var i = 0; i < circlesObj.length(); i++) {
+        circlesObj.get()[i].isDragging = false
+      }
+    }
+
+    // handle mouse moves
+    function myMove (e) {
+      // if we're dragging anything...
+      if (dragok) {
+        // tell the browser we're handling this mouse event
+        e.preventDefault()
+        e.stopPropagation()
+
+        // get the current mouse position
+        var mx = parseInt(e.clientX - offsetX)
+        var my = parseInt(e.clientY - offsetY)
+
+        // calculate the distance the mouse has moved
+        // since the last mousemove
+        var dx = mx - startX
+        var dy = my - startY
+
+        // move each rect that isDragging
+        // by the distance the mouse has moved
+        // since the last mousemove
+        for (var i = 0; i < circlesObj.length(); i++) {
+          var r = circlesObj.get()[i]
+          if (r.isDragging) {
+            r.x += dx
+            r.y += dy
+          }
+        }
+
+        // redraw the scene with the new rect positions
+        let {paralelogramPositions, yellowCicle} = calculateParalelogramAndYellowCircle(circlesObj, paralelogramObj)
+        drawCanvas(canvas, context, circlesObj.get(), paralelogramPositions, yellowCicle, resetCanvasContext)
+        writeInfos(circlesObj.get(), paralelogramObj.area(), selectedPointsTextField, objectsAreaTextField)
+
+        // reset the starting mouse position for the next mousemove
+        startX = mx
+        startY = my
+      }
+    }
+
     // User interaction
-    canvas.addEventListener('click', function (event) {
-      userClickedOnCanvas(
-        event.clientX,
-        event.clientY,
-        canvas,
-        context,
-        circlesObj,
-        paralelogramObj,
-        resetCanvasContext,
-        selectedPointsTextField,
-        objectsAreaTextField
-      )
-      writeInfos(circlesObj.get(), paralelogramObj.area(), selectedPointsTextField, objectsAreaTextField)
-    })
+    canvas.onmousedown = myDown
+    canvas.onmouseup = myUp
+    canvas.onmousemove = myMove
 
     // User reset
     const reset = document.querySelector('a[data-js="reset"]')
