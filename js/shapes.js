@@ -1,4 +1,4 @@
-import { determinante } from './maths'
+import { determinant } from './maths'
 
 // Circles class
 export const Circles = () => {
@@ -45,7 +45,8 @@ export const Paralelogram = () => {
 
   // Set the area of paralelogram
   const setArea = (x1, y1, x2, y2, x3, y3) => {
-    let newArea = determinante([[x1, y1, 1], [x2, y2, 1], [x3, y3, 1]])
+    // calculate the module of vertices of a triangle but without divide / 2 will be a paralelogram area
+    let newArea = determinant([[x1, y1, 1], [x2, y2, 1], [x3, y3, 1]])
     newArea = newArea < 0 ? newArea * -1 : newArea
     paralelogram.area = newArea
   }
